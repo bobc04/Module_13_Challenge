@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, Outlet} from 'react-router-dom';
 import CandidateSearch from "./components/CandidateSearch.tsx";
 import SavedCandidates from "./components/SavedCandidates.tsx";
 import ErrorPage from "./components/ErrorPage.tsx";
