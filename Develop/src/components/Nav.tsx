@@ -1,21 +1,18 @@
-// TYPES FOR NAVIGATION ITEMS AND PROPS
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Search, UserCheck, AlertCircle } from 'lucide-react';
+
+// TYPES FOR NAVIGATION ITEMS
 type NavItem = {
   path: string;
   name: string;
   icon: React.ComponentType<{ className?: string }>;
 };
 
-type NavProps = {
-  onNavigate?: (path: string) => void;
-};
-
-import React, { useState } from 'react';
-import { Search, UserCheck, AlertCircle } from 'lucide-react';
-
-// MAIN NAVIGATION COMPONENT
-const Nav: React.FC<NavProps> = ({ onNavigate }) => {
-  // STATE TO TRACK ACTIVE PAGE
-  const [activePath, setActivePath] = useState<string>('/');
+// NAVIGATION COMPONENT
+const Nav: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   
   // NAVIGATION ITEMS CONFIGURATION
   const navItems: NavItem[] = [
@@ -30,18 +27,15 @@ const Nav: React.FC<NavProps> = ({ onNavigate }) => {
       icon: UserCheck
     },
     {
-      path: '/error',
+      path: '*',
       name: 'Error Page',
       icon: AlertCircle
     }
   ];
 
-  // HANDLE NAVIGATION CLICK EVENTS
+  // NAVIGATION HANDLER
   const handleNavigation = (path: string): void => {
-    setActivePath(path);
-    if (onNavigate) {
-      onNavigate(path);
-    }
+    navigate(path);
   };
 
   // RENDER NAVIGATION BAR
@@ -55,7 +49,7 @@ const Nav: React.FC<NavProps> = ({ onNavigate }) => {
                 key={item.path}
                 onClick={() => handleNavigation(item.path)}
                 className={`inline-flex items-center px-3 py-2 text-sm font-medium border-b-2 hover:text-blue-600 hover:border-blue-600 ${
-                  activePath === item.path
+                  location.pathname === item.path
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500'
                 }`}
